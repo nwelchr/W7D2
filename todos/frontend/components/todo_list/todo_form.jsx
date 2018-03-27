@@ -4,33 +4,53 @@ export default class TodoForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      input: ''
+      title: '',
+      body: '',
+      done: false
     };
+
     console.log(props);
-  }
-  //
-  // linkState(key) {
-  //   // here we use '[key]' to set the key to be the value of the 'key' variable,
-  //   // as opposed to a string of 'key'
-  //   return (event => this.setState({[key]: event.currentTarget.value}));
-  // }
 
-  handleInput(e) {
-    const input = e.target.value;
-    this.setState({input: input});
+    this.handleTitle = this.handleTitle.bind(this);
+    this.handleBody = this.handleBody.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleSubmit() {
-    //this.props.receiveTodo;
+  handleTitle(e) {
+    const title = e.target.value;
+    this.setState({title: title});
+  }
+
+  handleBody(e) {
+    const body = e.target.value;
+    this.setState({body: body});
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
+
+    const todo = Object.assign({}, this.state, { id: new Date().getTime() });
+
+    this.props.receiveTodo(todo);
+
+    this.setState({
+      title: '',
+      body: '',
+    });
   }
 
   render () {
     return (
-      <div>
+      <form onSubmit={this.handleSubmit}>
         <span>Create a new Todo item!</span>
-        <input onChange={() => this.handleInput()} value={this.state.input}/>
-        <button onClick={() => this.handleSubmit()}>Add your Todo!</button>
-      </div>
+        <label>Title
+        <input onChange={this.handleTitle} value={this.state.title}/>
+        </label>
+        <label>Body
+        <textarea onChange={this.handleBody} value={this.state.body}></textarea>
+        </label>
+        <button>Add your Todo!</button>
+      </form>
     );
   }
 }
