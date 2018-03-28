@@ -2,9 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Root from './components/root';
 import configureStore from './store/store';
-import {receiveTodo, receiveTodos } from './actions/todo_actions';
+import {receiveTodo, receiveTodos, fetchTodos } from './actions/todo_actions';
 import allTodos from './reducers/selectors';
-import connect from './components/todos/todo_list_container.jsx';
+import connect from './components/todos/todo_list_container';
+
+window.fetchTodos = fetchTodos;
 
 window.connect = connect;
 
@@ -16,6 +18,6 @@ window.receiveTodos = receiveTodos;
 window.receiveTodo = receiveTodo;
 
 document.addEventListener('DOMContentLoaded', () => {
-  const root = document.getElementById('root');
-  ReactDOM.render(<Root store={store}/>, root);
+  const contentEl = document.getElementById('content');
+  ReactDOM.render(<Root store={store}/>, contentEl);
 });

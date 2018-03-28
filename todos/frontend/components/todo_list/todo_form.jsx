@@ -28,28 +28,26 @@ export default class TodoForm extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-
-    const todo = Object.assign({}, this.state, { id: new Date().getTime() });
-
-    this.props.receiveTodo(todo);
-
-    this.setState({
-      title: '',
-      body: '',
-    });
+    const todo = Object.assign({}, this.state);
+    this.props.createTodo( todo ).then(
+      () => this.setState({
+        title: "",
+        body: "",
+      })
+    );
   }
 
   render () {
     return (
       <form onSubmit={this.handleSubmit}>
-        <span>Create a new Todo item!</span>
+        <span>ZOMG make a Todo item!</span>
         <label>Title
         <input onChange={this.handleTitle} value={this.state.title}/>
         </label>
         <label>Body
         <textarea onChange={this.handleBody} value={this.state.body}></textarea>
         </label>
-        <button>Add your Todo!</button>
+        <button>Todo away!!!!</button>
       </form>
     );
   }
